@@ -22,11 +22,13 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"gitlab.com/kelda-hotrod/hotrod-base/pkg/tracing"
+	"os"
 )
 
 // Client is a remote client that implements route.Interface
 type Client struct {
 	client *tracing.HTTPClient
+	clientIP string
 }
 
 // NewClient creates a new route.Client
@@ -35,6 +37,7 @@ func NewClient() *Client {
 		client: &tracing.HTTPClient{
 			Client: http.DefaultClient,
 		},
+		clientIP: os.Getenv("HOTROD_ROUTE_SERVICE_HOST") + ":" + os.Getenv("HOTROD_ROUTE_SERVICE_PORT"),
 	}
 }
 
@@ -45,7 +48,8 @@ func (c *Client) FindRoute(ctx context.Context, pickup, dropoff string) (*Route,
 	v := url.Values{}
 	v.Set("pickup", pickup)
 	v.Set("dropoff", dropoff)
-	url := "http://127.0.0.1:8083/route?" + v.Encode()
+
+	url := "http://" + c.clientIP + "/route?" + v.Encode()
 
 	var route Route
 	if err := c.client.GetJSON(ctx, "/route", url, &route); err != nil {

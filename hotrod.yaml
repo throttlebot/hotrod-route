@@ -36,6 +36,7 @@ spec:
         prometheus.io/port: "8083"
     spec:
       containers:
+      - name: hotrod-route
         image: registry.hub.docker.com/willwangkelda/hotrod-route:COMMITID
         command: ["/go/bin/hotrod", "route"]
         env:

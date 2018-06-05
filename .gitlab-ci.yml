@@ -11,10 +11,11 @@ variables:
     DOCKER_USER: willwangkelda
     KUBE_NAMESPACE: hotrod
 
+services:
+    - docker:dind
+
 build:
     stage: build
-    services:
-        - docker:dind
     script:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
 

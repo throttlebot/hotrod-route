@@ -25,8 +25,7 @@ build:
     - docker build
       -t $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA
       --cache-from $DOCKER_USER/$IMAGE_NAME:latest
-      --build-arg git_pass=$GITLAB_TOKEN
-      --build-arg build_time=$(date +%s) .
+      --build-arg git_pass=$GITLAB_TOKEN .
     - docker push $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA
     - docker tag $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA  $DOCKER_USER/$IMAGE_NAME:latest
     - docker push $DOCKER_USER/$IMAGE_NAME:latest
@@ -42,10 +41,10 @@ stage:
     - mkdir -p $HOME/.kube
     - cat $KUBECONFIG > $HOME/.kube/config
   script:
-    - sed -i -e s/COMMITID/latest/g deploy/hotrod.yaml
-    - sed -i -e s/GITLAB_CI_ENV_SLUG/$CI_ENVIRONMENT_SLUG/g deploy/hotrod.yaml
-    - sed -i -e s/APPLICATION_TRACK/stable/g deploy/hotrod.yaml
-    - sed -i -e s/REPLICA_COUNT/1/g deploy/hotrod.yaml
+    - sed -i -e s/COMMITID/latest/g hotrod.yaml
+    - sed -i -e s/GITLAB_CI_ENV_SLUG/$CI_ENVIRONMENT_SLUG/g hotrod.yaml
+    - sed -i -e s/APPLICATION_TRACK/stable/g hotrod.yaml
+    - sed -i -e s/REPLICA_COUNT/1/g hotrod.yaml
     - kubectl apply -f hotrod.yaml --namespace $KUBE_NAMESPACE
 
 

@@ -8,7 +8,7 @@ metadata:
 spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the route service.
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 8083
     targetPort: 8083

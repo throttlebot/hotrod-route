@@ -14,7 +14,12 @@ WORKDIR /go/src/gitlab.com/kelda-hotrod
 ARG git_pass
 
 RUN git clone https://user:$git_pass@gitlab.com/will.wang1/hotrod-base
-RUN git clone https://user:$git_pass@gitlab.com/will.wang1/hotrod-route
+
+RUN mkdir hotrod-route
+COPY cmd/ hotrod-route/cmd/
+COPY route/ hotrod-route/route/
+COPY vendor/ hotrod-route/vendor/
+COPY main.go hotrod-route/
 
 WORKDIR /go/src/gitlab.com/kelda-hotrod/hotrod-route
 

@@ -10,6 +10,7 @@ variables:
     DOCKER_DRIVER: overlay2
     DOCKER_USER: willwangkelda
     KUBE_NAMESPACE: hotrod
+    KUBECTL_URL: https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/linux/amd64/kubectl
 
 services:
     - docker:dind

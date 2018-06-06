@@ -37,7 +37,7 @@ func NewClient() *Client {
 		client: &tracing.HTTPClient{
 			Client: http.DefaultClient,
 		},
-		clientIP: os.Getenv("HOTROD_ROUTE_SERVICE_HOST") + ":" + os.Getenv("HOTROD_ROUTE_SERVICE_PORT"),
+		clientIP: "hotrod-route" + ":" + os.Getenv("HOTROD_ROUTE_SERVICE_PORT"),
 	}
 }
 

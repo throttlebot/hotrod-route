@@ -10,7 +10,10 @@ spec:
   # an external load-balanced IP for the route service.
   type: ClusterIP
   ports:
-  - port: 8083
+  - name: hotrod-route
+    port: 8083
+    protocol: TCP
+    targetPort: hotrod-route
   selector:
     appName: hotrod-route
 ---

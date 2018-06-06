@@ -13,7 +13,7 @@ spec:
     port: 8083
     protocol: TCP
     targetPort: hotrod-route
-  type: CLusterIP
+  type: ClusterIP
   selector:
     appName: hotrod-route
 ---

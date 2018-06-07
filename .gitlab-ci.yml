@@ -27,10 +27,11 @@ before_script:
 
 build:
   stage: build
-  script:
-  - docker login -u $DOCKER_USER -p $DOCKER_PASS
   before_script:
   - echo "skip before_script"
+  script:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
   # Build hotrod image
   - docker pull $DOCKER_USER/$IMAGE_NAME:latest
   - docker build

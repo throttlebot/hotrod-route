@@ -57,5 +57,5 @@ unit:
   environment:
       name: StageEnv
   script:
-    - kubectl port-forward svc/$IMAGE_NAME 8083:8083 -n $KUBE_NAMESPACE
+    - kubectl port-forward svc/$IMAGE_NAME 8083:8083 -n $KUBE_NAMESPACE &
     - curl localhost:8083/route?pickup=locA&dropoff=locB

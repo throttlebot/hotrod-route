@@ -1,7 +1,7 @@
 stages:
-#  - build
-#  - stage
-  - test
+  - build
+  - stage
+
 
 image: docker:latest
 
@@ -13,6 +13,7 @@ variables:
   DOCKER_USER: willwangkelda
   KUBE_NAMESPACE: hotrod
   KUBECTL_URL: https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/linux/amd64/kubectl
+  KUBE_NAMESPACE: hotrod
 
 services:
   - docker:dind
@@ -24,39 +25,41 @@ before_script:
   - mkdir -p $HOME/.kube
   - cat $KUBECONFIG > $HOME/.kube/config
 
-#build:
-#  stage: build
-#  script:
-#  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-#  before_script:
-#  - echo "skip before_script"
-#  # Build hotrod image
-#  - docker pull $DOCKER_USER/$IMAGE_NAME:latest
-#  - docker build
-#    -t $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA
-#    --cache-from $DOCKER_USER/$IMAGE_NAME:latest
-#    --build-arg git_pass=$GITLAB_TOKEN
-#    --build-arg build_time=$(date +%s) .
-#  - docker push $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA
-#  - docker tag $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA  $DOCKER_USER/$IMAGE_NAME:latest
-#  - docker push $DOCKER_USER/$IMAGE_NAME:latest
-#
-#stage:
-#  stage: stage
-#  environment:
-#      name: StageEnv
-#  script:
-#    - sed -i -e s/COMMITID/$CI_COMMIT_SHA/g hotrod.yaml
-#    - sed -i -e s/GITLAB_CI_ENV_SLUG/$CI_ENVIRONMENT_SLUG/g hotrod.yaml
-#    - sed -i -e s/APPLICATION_TRACK/stable/g hotrod.yaml
-#    - sed -i -e s/REPLICA_COUNT/3/g hotrod.yaml
-#    - kubectl apply -f hotrod.yaml --namespace $KUBE_NAMESPACE
+build:
+  stage: build
+  script:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  before_script:
+  - echo "skip before_script"
+  # Build hotrod image
+  - docker pull $DOCKER_USER/$IMAGE_NAME:latest
+  - docker build
+    -t $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA
+    --cache-from $DOCKER_USER/$IMAGE_NAME:latest
+    --build-arg git_pass=$GITLAB_TOKEN
+    --build-arg build_time=$(date +%s) .
+  - docker push $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA
+  - docker tag $DOCKER_USER/$IMAGE_NAME:$CI_COMMIT_SHA  $DOCKER_USER/$IMAGE_NAME:latest
+  - docker push $DOCKER_USER/$IMAGE_NAME:latest
 
-unit:
-  stage: test
+stage:
+  stage: stage
   environment:
       name: StageEnv
   script:
-    - timeout 20s kubectl port-forward svc/$IMAGE_NAME 8083:8083 -n $KUBE_NAMESPACE &
-    - sleep 10s
-    - curl localhost:8083/route?pickup=locA&dropoff=locB
+    - sed -i -e s/COMMITID/$CI_COMMIT_SHA/g hotrod.yaml
+    - sed -i -e s/GITLAB_CI_ENV_SLUG/$CI_ENVIRONMENT_SLUG/g hotrod.yaml
+    - sed -i -e s/APPLICATION_TRACK/stable/g hotrod.yaml
+    - sed -i -e s/REPLICA_COUNT/3/g hotrod.yaml
+    - kubectl apply -f hotrod.yaml --namespace $KUBE_NAMESPACE
+
+production:
+  stage: deploy
+  environment:
+      name: ProdEnv
+  script:
+    - sed -i -e s/COMMITID/$CI_COMMIT_SHA/g hotrod.yaml
+    - sed -i -e s/GITLAB_CI_ENV_SLUG/$CI_ENVIRONMENT_SLUG/g hotrod.yaml
+    - sed -i -e s/APPLICATION_TRACK/stable/g hotrod.yaml
+    - sed -i -e s/REPLICA_COUNT/3/g hotrod.yaml
+    - kubectl apply -f hotrod.yaml --namespace $KUBE_NAMESPACE

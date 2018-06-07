@@ -57,6 +57,6 @@ unit:
   environment:
       name: StageEnv
   script:
-    - timeout 5s kubectl port-forward svc/$IMAGE_NAME 8083:8083 -n $KUBE_NAMESPACE &
-    - sleep 3s
+    - timeout 20s kubectl port-forward svc/$IMAGE_NAME 8083:8083 -n $KUBE_NAMESPACE &
+    - sleep 10s
     - curl localhost:8083/route?pickup=locA&dropoff=locB

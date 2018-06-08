@@ -22,7 +22,6 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"gitlab.com/kelda-hotrod/hotrod-base/pkg/tracing"
-	"os"
 )
 
 // Client is a remote client that implements route.Interface
@@ -37,7 +36,7 @@ func NewClient() *Client {
 		client: &tracing.HTTPClient{
 			Client: http.DefaultClient,
 		},
-		clientIP: "hotrod-route" + ":" + os.Getenv("HOTROD_ROUTE_SERVICE_PORT"),
+		clientIP: "hotrod-route:8083",
 	}
 }
 

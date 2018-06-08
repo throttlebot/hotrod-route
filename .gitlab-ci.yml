@@ -1,6 +1,7 @@
 stages:
   - build
   - stage
+  - test
   - deploy
 
 image: docker:latest
@@ -53,6 +54,18 @@ stage:
     - sed -i -e s/APPLICATION_TRACK/stable/g hotrod.yaml
     - sed -i -e s/REPLICA_COUNT/3/g hotrod.yaml
     - kubectl apply -f hotrod.yaml --namespace $KUBE_NAMESPACE
+
+unit:
+  stage: test
+  environment:
+    name: StageEnv
+  variables:
+    KUBERNETES_NAMESPACE_OVERWRITE: hotrod
+  script:
+    - apk add python py-pip
+    - pip install requests
+    - kubectl rollout status deployment/$CI_ENVIRONMENT_SLUG-hotrod-route --namespace $KUBE_NAMESPACE
+    - python tests/route_unit_test.py
 
 production:
   stage: deploy

@@ -65,7 +65,7 @@ unit:
     - apk add python py-pip
     - pip install requests
     - kubectl rollout status deployment/$CI_ENVIRONMENT_SLUG-hotrod-route --namespace $KUBE_NAMESPACE
-    - python tests/route_unit_test.py
+    - python route_unit_test.py
 
 production:
   stage: deploy

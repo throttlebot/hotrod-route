@@ -9,7 +9,7 @@ spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the route service.
   ports:
-  - name: hotrod-route
+  - name: http-hotrod-route
     port: 8083
   type: ClusterIP
   selector:

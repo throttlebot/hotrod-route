@@ -12,9 +12,9 @@ variables:
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://localhost:2375
   DOCKER_USER: willwangkelda
-  KUBE_NAMESPACE: hotrod
   KUBECTL_URL: https://storage.googleapis.com/kubernetes-release/release/v1.10.3/bin/linux/amd64/kubectl
   KUBE_NAMESPACE: hotrod
+  ISTIO_URL: https://github.com/istio/istio/releases/download/0.8.0/istio-0.8.0-linux.tar.gz
 
 services:
   - docker:dind
@@ -23,6 +23,8 @@ before_script:
   - apk update && apk add curl bash openssl
   - curl -LO $KUBECTL_URL
   - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+  - curl -L $ISTIO_URL | tar xz
+  - mv ./istio-*/bin/istioctl /usr/local/bin/istioctl
   - mkdir -p $HOME/.kube
   - cat $KUBECONFIG > $HOME/.kube/config
 
@@ -53,7 +55,8 @@ stage:
     - sed -i -e s/GITLAB_CI_ENV_SLUG/$CI_ENVIRONMENT_SLUG/g hotrod.yaml
     - sed -i -e s/APPLICATION_TRACK/stable/g hotrod.yaml
     - sed -i -e s/REPLICA_COUNT/3/g hotrod.yaml
-    - kubectl apply -f hotrod.yaml --namespace $KUBE_NAMESPACE
+    - istioctl kube-inject -f hotrod.yaml -o hotrod-with-istio.yaml
+    - kubectl apply -f hotrod-with-istio.yaml --namespace $KUBE_NAMESPACE
 
 unit:
   stage: test
@@ -76,4 +79,5 @@ production:
     - sed -i -e s/GITLAB_CI_ENV_SLUG/$CI_ENVIRONMENT_SLUG/g hotrod.yaml
     - sed -i -e s/APPLICATION_TRACK/stable/g hotrod.yaml
     - sed -i -e s/REPLICA_COUNT/3/g hotrod.yaml
-    - kubectl apply -f hotrod.yaml --namespace $KUBE_NAMESPACE
+    - istioctl kube-inject -f hotrod.yaml -o hotrod-with-istio.yaml
+    - kubectl apply -f hotrod-with-istio.yaml --namespace $KUBE_NAMESPACE

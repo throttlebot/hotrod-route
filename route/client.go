@@ -21,7 +21,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"gitlab.com/kelda-hotrod/hotrod-base/pkg/tracing"
+	"gitlab.com/will.wang1/hotrod-base/pkg/tracing"
 )
 
 // Client is a remote client that implements route.Interface

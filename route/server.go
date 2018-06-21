@@ -18,18 +18,17 @@ import (
 	"context"
 	"encoding/json"
 	"expvar"
+	"math/rand"
 	"net/http"
 	"time"
-	"math/rand"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
 
-	"gitlab.com/kelda-hotrod/hotrod-base/pkg/tracing"
-	"gitlab.com/kelda-hotrod/hotrod-base/pkg/delay"
-	"gitlab.com/kelda-hotrod/hotrod-base/pkg/httperr"
-	"gitlab.com/kelda-hotrod/hotrod-base/config"
-
+	"gitlab.com/will.wang1/hotrod-base/config"
+	"gitlab.com/will.wang1/hotrod-base/pkg/delay"
+	"gitlab.com/will.wang1/hotrod-base/pkg/httperr"
+	"gitlab.com/will.wang1/hotrod-base/pkg/tracing"
 )
 
 // Server implements Route service
@@ -109,5 +108,5 @@ func computeRoute(ctx context.Context, pickup, dropoff string) *Route {
 
 func computeEta() time.Duration {
 	seconds := int16(rand.Intn(32967))
-	return time.Duration(seconds / 60) * time.Minute // Returns a time.Duration object in minutes
+	return time.Duration(seconds/60) * time.Minute // Returns a time.Duration object in minutes
 }

@@ -20,6 +20,17 @@
   version = "v1.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/kelda-inc/hotrod-base"
+  packages = [
+    "config",
+    "pkg/delay",
+    "pkg/httperr",
+    "pkg/tracing"
+  ]
+  revision = "c6469c78da4df7dc6d2499fe08f83c9335c0c2d2"
+
+[[projects]]
   name = "github.com/matttproud/golang_protobuf_extensions"
   packages = ["pbutil"]
   revision = "c12348ce28de40eed0136aa2b644d0ee0650e56c"
@@ -68,7 +79,7 @@
     "nfs",
     "xfs"
   ]
-  revision = "7d6f385de8bea29190f15ba9931442a0eaef9af7"
+  revision = "ae68e2d4c00fed4943b5f6698d504a5fe083da8a"
 
 [[projects]]
   name = "github.com/sirupsen/logrus"
@@ -90,17 +101,6 @@
 
 [[projects]]
   branch = "master"
-  name = "gitlab.com/will.wang1/hotrod-base"
-  packages = [
-    "config",
-    "pkg/delay",
-    "pkg/httperr",
-    "pkg/tracing"
-  ]
-  revision = "45976170c3c1ca9e8220c867c7a576ed28e26ced"
-
-[[projects]]
-  branch = "master"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
   revision = "a49355c7e3f8fe157a85be2f77e6e269a0f89602"
@@ -109,7 +109,7 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context"]
-  revision = "afe8f62b1d6bbd81f31868121a50b06d8188e1f9"
+  revision = "039a4258aec0ad3c79b905677cceeab13b296a77"
 
 [[projects]]
   branch = "master"
@@ -118,11 +118,11 @@
     "unix",
     "windows"
   ]
-  revision = "ad87a3a340fa7f3bed189293fbfa7a9b7e021ae1"
+  revision = "1b2967e3c290b7c545b3db0deeda16e9be4f98a2"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "4e101a57771412e7f260638ac6726f36f4b8fa34c49511085162eb554ce71077"
+  inputs-digest = "2d8c16bb33b7832de1b7d0d80e4d30fec923bc2a1c31b91b9023d3a3a768ee70"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -3,12 +3,12 @@ MAINTAINER Hantao Wang
 
 EXPOSE 8083
 
-RUN mkdir -p /go/src/gitlab.com/will.wang1
+RUN mkdir -p /go/src/github.com/kelda-inc
 RUN mkdir -p /go/bin
 
-ADD . /go/src/gitlab.com/will.wang1/hotrod-route
+ADD . /go/src/github.com/kelda-inc/hotrod-route
 
-WORKDIR /go/src/gitlab.com/will.wang1/hotrod-route
+WORKDIR /go/src/github.com/kelda-inc/hotrod-route
 
 RUN go build -o hotrod main.go
 RUN mv hotrod /go/bin/

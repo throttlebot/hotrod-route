@@ -20,7 +20,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"gitlab.com/will.wang1/hotrod-route/route"
+	"github.com/kelda-inc/hotrod-route/route"
 )
 
 // routeCmd represents the route command

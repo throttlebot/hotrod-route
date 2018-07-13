@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: hotrod-route
-        image: registry.hub.docker.com/willwangkelda/hotrod-route
+        image: index.docker.io/willwangkelda/hotrod-route
         command: ["/go/bin/hotrod", "route"]
         env:
         - name: GET_HOSTS_FROM

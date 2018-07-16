@@ -1,4 +1,4 @@
-import requests
+import requests, sys
 
 """
 Checks that the server returns a valid response
@@ -13,4 +13,4 @@ def test(host, port):
 
 if __name__ == '__main__':
 
-	test("hotrod-route", 8083)
+	test(sys.argv[1], 8083)

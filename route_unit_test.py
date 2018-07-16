@@ -10,6 +10,8 @@ def test(host, port):
 	assert result["Pickup"] == "test2"
 	assert result["Dropoff"] == "test"
 	assert isinstance(result["ETA"], int)
+	print "pass"
+	print result
 
 if __name__ == '__main__':
 

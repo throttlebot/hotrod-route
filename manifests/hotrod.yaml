@@ -38,6 +38,7 @@ spec:
       containers:
       - name: hotrod-route
         image: index.docker.io/willwangkelda/hotrod-route
+        imagePullPolicy: IfNotPresent
         command: ["/go/bin/hotrod", "route"]
         env:
         - name: GET_HOSTS_FROM

@@ -107,6 +107,6 @@ func computeRoute(ctx context.Context, pickup, dropoff string) *Route {
 }
 
 func computeEta() time.Duration {
-	seconds := rand.Intn(32767)
+	seconds := rand.Intn(60 * 5)
 	return time.Duration(seconds/60) * time.Minute // Returns a time.Duration object in minutes
 }

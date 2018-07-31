@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - name: hotrod-route
-        image: index.docker.io/willwangkelda/hotrod-route
+        image: index.docker.io/willwangkelda/hotrod-route:23d9e3a9b8b8cc4a87c252503351a1705c15c108
         imagePullPolicy: IfNotPresent
         command: ["/go/bin/hotrod", "route"]
         env:

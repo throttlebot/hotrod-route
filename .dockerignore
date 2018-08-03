@@ -1,0 +1,7 @@
+Dockerfile
+draft.toml
+charts/
+Jenkinsfile
+manifests/
+skaffold.yaml
+Gopkg.*

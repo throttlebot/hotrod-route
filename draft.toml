@@ -1,0 +1,11 @@
+[environments]
+  [environments.development]
+    name = "hotrod-route"
+    namespace = "hotrod"
+    wait = true
+    watch = false
+    watch-delay = 2
+    auto-connect = false
+    dockerfile = ""
+    chart = ""
+    set = ["service.internalPort=8083"]

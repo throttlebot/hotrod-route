@@ -25,8 +25,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/kelda-inc/hotrod-base/config"
-	"github.com/kelda-inc/hotrod-base/pkg/delay"
 	"github.com/kelda-inc/hotrod-base/pkg/httperr"
 	"github.com/kelda-inc/hotrod-base/pkg/tracing"
 )
@@ -95,9 +93,6 @@ func computeRoute(ctx context.Context, pickup, dropoff string) *Route {
 	defer func() {
 		updateCalcStats(ctx, time.Since(start))
 	}()
-
-	// Simulate expensive calculation
-	delay.Sleep(config.RouteCalcDelay, config.RouteCalcDelayStdDev)
 
 	return &Route{
 		Pickup:  pickup,

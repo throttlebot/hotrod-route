@@ -27,6 +27,7 @@ import (
 
 	"github.com/kelda-inc/hotrod-base/pkg/httperr"
 	"github.com/kelda-inc/hotrod-base/pkg/tracing"
+	"math"
 )
 
 // Server implements Route service
@@ -102,6 +103,6 @@ func computeRoute(ctx context.Context, pickup, dropoff string) *Route {
 }
 
 func computeEta() time.Duration {
-	seconds := rand.Intn(60 * 5)
-	return time.Duration(seconds/60) * time.Minute // Returns a time.Duration object in minutes
+	eta := math.Max(2, rand.NormFloat64()*3+5)
+	return time.Duration(eta) * time.Minute // Returns a time.Duration object in minutes
 }

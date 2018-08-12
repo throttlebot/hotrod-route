@@ -28,6 +28,8 @@ import (
 	"github.com/kelda-inc/hotrod-base/pkg/httperr"
 	"github.com/kelda-inc/hotrod-base/pkg/tracing"
 	"math"
+	"strings"
+	"strconv"
 )
 
 // Server implements Route service
@@ -95,14 +97,34 @@ func computeRoute(ctx context.Context, pickup, dropoff string) *Route {
 		updateCalcStats(ctx, time.Since(start))
 	}()
 
+	s1 := strings.Split(pickup, ",")
+	s2 := strings.Split(dropoff, ",")
+
+	x, err1 := strconv.ParseFloat(s1[0], 64)
+	y, err2 := strconv.ParseFloat(s1[1], 64)
+	z, err3 := strconv.ParseFloat(s2[0], 64)
+	w, err4 := strconv.ParseFloat(s2[1], 64)
+
+	if err1 != nil || err2 != nil || err3 != nil || err4 != nil {
+		return &Route{
+			Pickup:  pickup,
+			Dropoff: dropoff,
+			ETA: time.Minute * 60 * 24,
+		}
+	}
+
+	eta := computeEta(x, y, z, w)
+
 	return &Route{
 		Pickup:  pickup,
 		Dropoff: dropoff,
-		ETA:     computeEta(),
+		ETA: eta,
 	}
 }
 
-func computeEta() time.Duration {
-	eta := math.Max(2, rand.NormFloat64()*3+5)
-	return time.Duration(eta) * time.Minute // Returns a time.Duration object in minutes
+func computeEta(x, y, z, w float64) time.Duration {
+	dist := math.Sqrt(math.Pow(x - z, 2) + math.Pow(y - w, 2))
+	multiplier := math.Max(2, rand.NormFloat64()*3+5)
+
+	return time.Duration(dist * multiplier) * time.Minute // Returns a time.Duration object in minutes
 }

@@ -48,7 +48,6 @@ func NewClient() *Client {
 
 // FindRoute implements route.Interface#FindRoute as an RPC
 func (c *Client) FindRoute(ctx context.Context, pickup, dropoff string) (*Route, error) {
-	log.WithField("pickup", pickup).WithField("dropoff", dropoff).Info("Finding route")
 
 	v := url.Values{}
 	v.Set("pickup", pickup)

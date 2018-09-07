@@ -47,7 +47,6 @@ func NewServer(hostPort string) *Server {
 // Run starts the Route server
 func (s *Server) Run() error {
 	mux := s.createServeMux()
-	log.WithField("address", "http://"+s.hostPort).Info("Starting")
 	return http.ListenAndServe(s.hostPort, mux)
 }
 
@@ -61,7 +60,6 @@ func (s *Server) createServeMux() http.Handler {
 
 func (s *Server) route(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	log.WithField("method", r.Method).WithField("url", r.URL).Info("HTTP request received")
 	if err := r.ParseForm(); httperr.HandleError(w, err, http.StatusBadRequest) {
 		log.WithError(err).Error("bad request")
 		return

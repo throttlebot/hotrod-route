@@ -37,8 +37,8 @@ spec:
     spec:
       containers:
       - name: hotrod-route
-        image: index.docker.io/willwangkelda/hotrod-route:map
-        imagePullPolicy: IfNotPresent
+        image: index.docker.io/hantaowang/hotrod-route:log
+        imagePullPolicy: Always
         command: ["/go/bin/hotrod", "route"]
         env:
         - name: GET_HOSTS_FROM
